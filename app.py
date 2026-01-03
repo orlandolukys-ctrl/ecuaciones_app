@@ -2,7 +2,7 @@ import streamlit as st
 import sympy as sp
 
 # --------------------------------------------------
-# CONFIGURACIÓN (SIEMPRE PRIMERO)
+# CONFIGURACIÓN
 # --------------------------------------------------
 st.set_page_config(
     page_title="Ecuaciones Diferenciales",
@@ -10,7 +10,7 @@ st.set_page_config(
 )
 
 # --------------------------------------------------
-# SIDEBAR (SIN IMÁGENES)
+# SIDEBAR
 # --------------------------------------------------
 st.sidebar.markdown("### 📡 App educativa")
 st.sidebar.markdown(
@@ -51,23 +51,33 @@ gy = st.text_input("g(y):", "y")
 # --------------------------------------------------
 if st.button("Resolver"):
     try:
+        # Convertir entradas en expresiones simbólicas
         f = sp.sympify(fx)
         g = sp.sympify(gy)
 
+        # --------------------------------------------------
+        # SEPARACIÓN DE VARIABLES
+        # --------------------------------------------------
         st.markdown("### 🔹 Separación de variables")
-        st.latex(r"\frac{1}{g(y)} \, dy = f(x) \, dx")
+        st.latex(sp.latex(1 / g) + r" \, dy = " + sp.latex(f) + r" \, dx")
 
-        left = sp.integrate(1 / g, y)
-        right = sp.integrate(f, x)
+        # --------------------------------------------------
+        # INTEGRACIÓN
+        # --------------------------------------------------
+        left_integral = sp.integrate(1 / g, y)
+        right_integral = sp.integrate(f, x)
 
         st.markdown("### 🔹 Integración")
-        st.latex(rf"{sp.latex(left)} = {sp.latex(right)} + C")
+        st.latex(sp.latex(left_integral) + " = " + sp.latex(right_integral) + " + C")
 
+        # --------------------------------------------------
+        # SOLUCIÓN GENERAL
+        # --------------------------------------------------
         st.markdown("### ✅ Solución general")
-        st.latex(rf"{sp.latex(left - right)} = C")
+        st.latex(sp.latex(left_integral - right_integral) + " = C")
 
-    except Exception:
-        st.error("❌ Error en la ecuación ingresada")
+    except Exception as e:
+        st.error(f"❌ Error en la ecuación ingresada: {e}")
 
 # --------------------------------------------------
 # PIE DE PÁGINA
@@ -81,7 +91,10 @@ st.markdown(
 )
 
 
-   
+
+
+
+
 
    
 
