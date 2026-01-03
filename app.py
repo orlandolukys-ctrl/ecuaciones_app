@@ -1,9 +1,8 @@
 import streamlit as st
 import sympy as sp
-import os
 
 # --------------------------------------------------
-# CONFIGURACIÓN (DEBE SER LO PRIMERO)
+# CONFIGURACIÓN (SIEMPRE PRIMERO)
 # --------------------------------------------------
 st.set_page_config(
     page_title="Ecuaciones Diferenciales",
@@ -11,23 +10,13 @@ st.set_page_config(
 )
 
 # --------------------------------------------------
-# SIDEBAR (LOGO PROTEGIDO)
+# SIDEBAR (SIN IMÁGENES)
 # --------------------------------------------------
-logo_path = "logo_telecom.png"
-
-if os.path.exists(logo_path):
-    try:
-        st.sidebar.image(logo_path, width=100)
-    except Exception:
-        st.sidebar.markdown("### 📡 App educativa")
-else:
-    st.sidebar.markdown("### 📡 App educativa")
-
+st.sidebar.markdown("### 📡 App educativa")
 st.sidebar.markdown(
     """
     *Ing. Orlando Ramírez Rodríguez*  
     Telecomunicaciones  
-    App educativa
     """
 )
 
@@ -58,7 +47,7 @@ fx = st.text_input("f(x):", "x")
 gy = st.text_input("g(y):", "y")
 
 # --------------------------------------------------
-# PROCESAMIENTO
+# PROCESO
 # --------------------------------------------------
 if st.button("Resolver"):
     try:
@@ -90,4 +79,9 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
+
+   
+
+   
 
